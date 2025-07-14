@@ -1,24 +1,45 @@
-import { productos } from "../../productos.js";
+import * as model from "../models/products.model.js";
 
 export const getAllProducts = (req, resp) => {
-    resp.json(productos);
+    resp.status(200).json (model.getAllProducts());
 };
 
 export const searchProducts = (req, resp) => {
-    const  {categoria} = req.query;
-    const filtrados = productos.filter((item) => item.categoria.toLowerCase().includes(categoria.toLowerCase()));
-    if(filtrados.length === 0) {
-        return resp.status(404).json({error: "No hay coincidencias con su busqueda"});
-    };
-    resp.status(200).send(filtrados);
-    console.log(filtrados);
+    const categoria = req.query.categoria;
+    //const articulo = req.query.articulo;
+    const filtrados = model.searchProducts(categoria);
+
+    if (filtrados.length == 0 ) {
+        resp.status(404).json({error: "Busqueda no coincide"});
+    }
+    
+    resp.status(200).json(filtrados);
+    
 };
 
-export const getProductById = (req, resp) => {
-    const encontrado = productos.find ((item) => item.id == req.params.id);
-   
-    if (encontrado == undefined){
-        return resp.status(404).json({error: "No existe el producto solicitado"});
+
+export const getProductById = (req , resp) => {
+    const id = req.params.id;
+    const product = model.getProductById(id);
+
+    if (product == undefined) {
+        resp.status(404).json({error : "Producto No encontrado"});
     }
-     resp.json(encontrado);
+
+    resp.json(product);
 };
+
+export const createProduct = (req, resp) => {
+    const {categoria, articulo, precio } = req.body;
+    const productoCreado = model.createProduct(categoria, articulo, precio);
+    resp.json(productoCreado);
+}
+
+export const deleteProduct = (req, resp) => {
+    const id = req.params.id;
+    const registroBorrado = model.deleteProduct(id);
+    if (registroBorrado == undefined ){
+        resp.status(404).json({error : "Producto No encontrado"});
+    }
+    resp.json(registroBorrado);
+}
