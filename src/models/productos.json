@@ -18,12 +18,6 @@
     "precio": 600
   },
   {
-    "id": 4,
-    "categoria": "libreria",
-    "articulo": "cuaderno",
-    "precio": 1000
-  },
-  {
     "id": 5,
     "categoria": "libreria",
     "articulo": "resmaA4",
@@ -34,11 +28,5 @@
     "categoria": "libreria",
     "articulo": "pisapapeles",
     "precio": 4667
-  },
-  {
-    "id": 7,
-    "categoria": "bazar",
-    "articulo": "juego de cubiertos",
-    "precio": 20500
   }
 ]

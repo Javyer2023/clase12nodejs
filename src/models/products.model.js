@@ -40,7 +40,16 @@ export const deleteProduct = (id) => {
     const productoBorrado = products.splice(indice, 1);
     fs.writeFileSync(filePath, JSON.stringify(products, null, 2));
     return productoBorrado;
+}
 
-    
-    
+export const updateProduct = (id, nuevosDatos ) => {
+     const indice = parseInt(products.findIndex((item) => item.id === id));
+     if (indice == undefined){
+        return null;
+     }
+     else {
+        products[indice] = { ...products[indice], ...nuevosDatos };
+        fs.writeFileSync(filePath, JSON.stringify(products, null, 2));
+        return products[indice];
+     }
 }

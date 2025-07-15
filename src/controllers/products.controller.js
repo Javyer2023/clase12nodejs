@@ -36,10 +36,26 @@ export const createProduct = (req, resp) => {
 }
 
 export const deleteProduct = (req, resp) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const registroBorrado = model.deleteProduct(id);
     if (registroBorrado == undefined ){
         resp.status(404).json({error : "Producto No encontrado"});
     }
-    resp.json(registroBorrado);
+    else {
+        resp.json(registroBorrado);
+    }
+    
 }
+
+export const updateProduct = (req, resp) => {
+    const id = parseInt(req.params.id);
+    const datosBody = req.body;
+    const registroActualizado = model.updateProduct(id, datosBody);
+    if (registroActualizado == undefined ){
+        resp.json({error : "Producto inexistente, no se puede actualizar!"});
+    }
+    else {
+        resp.json(registroActualizado);
+}
+    }
+    
